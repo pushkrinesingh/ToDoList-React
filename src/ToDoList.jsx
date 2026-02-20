@@ -1,26 +1,44 @@
 import React, { useState } from "react";
-import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 const ToDoList = () => {
   const [input, setInput] = useState("");
   const [task, setTask] = useState([]);
-  const [isEditing, setEditing] = useState(false);
+  const [IsEditing, setIsEditing] = useState(false);
+  const [EditID, setEditID] = useState(null);
 
   function AddTask() {
-    const obj = { id: Date.now(), tasks: input };
-
-    setTask([...task, obj]);
+    if (!IsEditing) {
+      const obj = { id: Date.now(), tasks: input };
+      setTask([...task, obj]);
+    } else {
+      setTask(
+        task.map((obj) => {
+          return obj.id === EditID ? { ...obj, tasks: input } : obj;
+        }),
+      );
+    }
+    setIsEditing(false);
+    setEditID(null);
     setInput("");
   }
+
   function DeleteTask(id) {
-    setTask(task.filter((obj) => obj.id !== id));
+    setTask(
+      task.filter((obj) => {
+        return obj.id !== id;
+      }),
+    );
   }
 
   function EditTask(id) {
-    const EditedTask = task.find((obj) => obj.id == id);
+    const EditedTask = task.find((obj) => {
+      return obj.id === id;
+    });
+    setIsEditing(true);
+    setEditID(id);
     setInput(EditedTask.tasks);
-    setEditing(true);
   }
 
   return (
@@ -28,22 +46,24 @@ const ToDoList = () => {
       <div className="wrapper">
         <h1>To Do List</h1>
         <input
-          value={input}
           onChange={(e) => setInput(e.target.value)}
+          value={input}
           type="text"
-          placeholder="Enter The Task"
+          placeholder="Enter Your Task"
         />
         <button onClick={AddTask}>
-          {isEditing ? "Edit Task" : "Add Task"}
+          {!IsEditing ? "Add Task" : "Edit task"}
         </button>
       </div>
       <ul>
         {task.map((obj) => {
           return (
             <li>
-              <span>{obj.tasks}</span>
-              <MdDelete onClick={() => DeleteTask(obj.id)} />
-              <MdEdit onClick={() => EditTask(obj.id)} />
+              {obj.tasks}
+              <span>
+                <MdEdit onClick={() => EditTask(obj.id)} />
+                <MdDelete onClick={() => DeleteTask(obj.id)} />
+              </span>
             </li>
           );
         })}
