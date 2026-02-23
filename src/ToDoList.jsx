@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 
 const ToDoList = () => {
   const [input, setInput] = useState("");
@@ -24,21 +25,31 @@ const ToDoList = () => {
     setInput("");
   }
 
-  function DeleteTask(id) {
+  function DeleteTask(IdToDelete) {
     setTask(
       task.filter((obj) => {
-        return obj.id !== id;
+        return obj.id !== IdToDelete;
       }),
     );
   }
 
-  function EditTask(id) {
+  function EditTask(IdToEdit) {
     const EditedTask = task.find((obj) => {
-      return obj.id === id;
+      return obj.id === IdToEdit;
     });
     setIsEditing(true);
-    setEditID(id);
+    setEditID(IdToEdit);
     setInput(EditedTask.tasks);
+  }
+
+  function CompletedTask(CompletedId) {
+    setTask(
+      task.map((obj) => {
+        return obj.id === CompletedId
+          ? { ...obj, Complete: obj.Complete ? false : true }
+          : obj;
+      }),
+    );
   }
 
   return (
@@ -58,11 +69,19 @@ const ToDoList = () => {
       <ul>
         {task.map((obj) => {
           return (
-            <li>
+            <li
+              key={obj.id}
+              style={
+                obj.Complete
+                  ? { opacity: 0.5, textDecoration: "line-through" }
+                  : { opacity: 1, textDecoration: "none" }
+              }
+            >
               {obj.tasks}
               <span>
                 <MdEdit onClick={() => EditTask(obj.id)} />
                 <MdDelete onClick={() => DeleteTask(obj.id)} />
+                <FaCheck onClick={() => CompletedTask(obj.id)} />
               </span>
             </li>
           );
