@@ -103,3 +103,99 @@ li span svg:last-child {
 li span svg:last-child:hover {
   transform: scale(1.2);
 }
+
+@media (max-width: 768px) {
+
+  .wrapper {
+    width: 320px;
+    padding: 20px;
+  }
+
+  .wrapper h1 {
+    font-size: 22px;
+  }
+
+  .wrapper input {
+    width: 60%;
+    font-size: 14px;
+  }
+
+  .wrapper button {
+    padding: 9px 12px;
+    font-size: 14px;
+  }
+
+  ul {
+    width: 100%;
+  }
+
+  li {
+    font-size: 16px;
+  }
+
+  li span svg {
+    font-size: 22px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  body {
+    padding: 15px;
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 320px;
+    padding: 18px;
+  }
+
+  .wrapper h1 {
+    font-size: 20px;
+  }
+
+  .wrapper input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .wrapper button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  ul {
+    width: 100%;
+  }
+
+  li {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  li span svg {
+    font-size: 20px;
+  }
+}
+
+
+@media (max-width: 350px) {
+
+  .wrapper {
+    padding: 15px;
+  }
+
+  .wrapper h1 {
+    font-size: 18px;
+  }
+
+  li {
+    font-size: 14px;
+  }
+
+  li span svg {
+    font-size: 18px;
+  }
+
+}
